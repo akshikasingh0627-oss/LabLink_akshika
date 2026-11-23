@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>LabLink</title>
+<script src="10589b5e-e99e-4b9a-9e51-d68a088f1c61"></script>
+<meta name="hz:slide-selector" content="[data-canvas-width]"><meta name="hz:canvas-width" content="1360"><meta name="hz:canvas-height" content="900"></head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.ll{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--ink);background:var(--canvas);min-height:900px;letter-spacing:0}
+.ll h1,.ll h2,.ll h3{letter-spacing:-0.02em;font-weight:700;margin:0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.btn{background:var(--cta);color:#FDFCF8;border:1px solid var(--cta);border-radius:4px;padding:9px 14px;font:600 14px inherit;font-family:inherit;cursor:pointer;min-height:44px}
+.btn:hover{background:var(--ctah)}
+.btn.o{background:transparent;color:var(--ink);border-color:var(--bd)}
+.btn.o:hover{background:var(--card)}
+.ll button:focus-visible,.ll a:focus-visible,.ll input:focus-visible,.ll select:focus-visible,.ll textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:4px;padding:16px}
+.in{width:100%;box-sizing:border-box;border:1px solid var(--bd);border-radius:6px;padding:10px;font:14px inherit;font-family:inherit;background:#FDFCF8;color:#101010;min-height:44px}
+label{font-size:13px;font-weight:700;display:block;margin:10px 0 4px}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:#FDFCF8;border:0;border-radius:6px;padding:11px 12px;font:14px inherit;font-family:inherit;cursor:pointer;min-height:44px}
+.nav.on{background:var(--hl);font-weight:700}
+.badge{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--bd);border-radius:4px;padding:2px 8px;font-size:12px;font-weight:700;background:#FDFCF8;color:#101010}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+.ll thead th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;background:var(--card)}.ll .mono{font-variant-numeric:tabular-nums}.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:#fff;color:#000;padding:8px;z-index:9}
+</style>
+</helmet>
+<div class="ll" style="{{vars}}" data-canvas-width="1360" data-canvas-height="900" data-document-role="page" data-label="LabLink app">
+<a class="skip" href="#main">Skip to content</a>
+<sc-if value="{{isLogin}}" hint-placeholder-val="{{ true }}">
+<main id="main" style="display:flex;flex-wrap:wrap;min-height:900px">
+<section style="flex:1 1 480px;padding:64px;border-right:1px solid var(--bd)">
+<p class="mono" style="margin:0 0 24px">LABLINK / CAMPUS LABS</p>
+<h1 style="font-size:24px;letter-spacing:-0.025em">LabLink</h1>
+<p style="font-size:14px;max-width:420px;line-height:1.5;margin-top:8px">Select a portal. Lab equipment booking across 5 departments.</p>
+</section>
+<section style="flex:1 1 420px;padding:64px;display:grid;gap:12px;align-content:start">
+<div class="card"><h2 style="font-size:16px">Student Portal</h2><p style="font-size:13px;margin:6px 0 12px">Catalog, AI lab matcher, bookings.</p><button class="btn" sc-camel-on-click="{{goStudent}}">Open Student Portal</button></div>
+<div class="card"><h2 style="font-size:16px">Faculty &amp; Lab Manager Portal</h2><p style="font-size:13px;margin:6px 0 12px">Approvals, conflicts, issue and return, maintenance.</p><button class="btn" sc-camel-on-click="{{goFaculty}}">Open Faculty Portal</button></div>
+<div class="card"><h2 style="font-size:16px">System Admin Portal</h2><p style="font-size:13px;margin:6px 0 12px">Analytics, users, audit log, global rules.</p><button class="btn" sc-camel-on-click="{{goAdmin}}">Open Admin Portal</button></div>
+</section></main>
+</sc-if>
+<sc-if value="{{inApp}}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:nowrap;width:100%;min-height:900px;align-items:stretch">
+<aside style="flex:0 0 240px;width:240px;display:flex;flex-direction:column;background:var(--rail);color:#FDFCF8;padding:20px 12px;box-sizing:border-box"><nav aria-label="Primary">
+<p class="mono" style="margin:0 0 16px;padding:0 12px">LABLINK / {{roleName}}</p>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="3"><button class="{{n.cls}}" sc-camel-on-click="{{n.go}}">{{n.label}}</button></sc-for>
+</nav></aside>
+<div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column">
+<header style="position:relative;background:#FDFCF8;color:#101010;border-bottom:1px solid var(--bd);height:56px;box-sizing:border-box;padding:0 24px;display:flex;gap:8px;align-items:center;justify-content:flex-end">
+<span class="mono" style="margin-right:auto">11:00 IST, 23 Nov 2026</span>
+<button class="btn o" aria-haspopup="true" sc-camel-on-click="{{toggleNotes}}">Notifications <span class="badge">{{unread}}</span></button>
+<div aria-live="polite" style="position:absolute;right:24px;top:100%;z-index:5;width:340px;max-width:90vw"><sc-if value="{{notesOpen}}" hint-placeholder-val="{{ false }}"><div class="card" style="background:#FDFCF8;color:#101010"><h2 style="font-size:16px">Notifications</h2><sc-for list="{{notes}}" as="nt" hint-placeholder-count="3"><p style="margin:8px 0;font-size:13px;font-weight:{{nt.w}}">{{nt.text}}</p></sc-for><button class="btn o" sc-camel-on-click="{{readAll}}">Mark all read</button></div></sc-if></div>
+<span role="group" aria-label="Role Switcher" style="display:flex;gap:8px"><button class="btn o" sc-camel-on-click="{{goHome}}">Portal Home</button><button class="btn o" sc-camel-on-click="{{goStudent}}">Student</button><button class="btn o" sc-camel-on-click="{{goFaculty}}">Faculty</button><button class="btn o" sc-camel-on-click="{{goAdmin}}">Admin</button></span>
+</header>
+<main id="main" style="flex:1 1 auto;padding:24px;background:var(--surf)">
+<h1 style="font-size:24px;letter-spacing:-0.025em;margin-bottom:16px">{{title}}</h1>
+
+<sc-if value="{{t_catalog}}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+<div style="flex:1 1 240px"><label for="q">Search name or code</label><input id="q" class="in" value="{{q}}" sc-camel-on-input="{{setQ}}"></div>
+<div style="flex:0 0 180px"><label for="dp">Department</label><sc-raw-select id="dp" class="in" sc-camel-on-change="{{setDept}}"><option>All</option><option>CSE</option><option>ECE</option><option>Robotics</option><option>Mechanical</option><option>Biotech</option></sc-raw-select></div>
+<div style="flex:0 0 180px"><label for="st">Status</label><sc-raw-select id="st" class="in" sc-camel-on-change="{{setStat}}"><option>All</option><option>available</option><option>maintenance</option></sc-raw-select></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+<sc-for list="{{items}}" as="i" hint-placeholder-count="4"><div class="card"><span class="mono">{{i.code}}</span> <span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="{{i.ic}}"></path></svg>{{i.status}}</span>
+<h3 style="font-size:18px;margin:8px 0 4px">{{i.name}}</h3><p style="margin:0;font-size:13px">{{i.dept}} · <span class="mono">{{i.loc}}</span></p><p style="font-size:13px">{{i.spec}}</p><p style="font-size:13px"><strong>Safety:</strong> {{i.safety}}</p>
+<div style="display:flex;gap:8px"><button class="btn o" sc-camel-on-click="{{i.add}}">{{i.addLabel}}</button><button class="btn" sc-camel-on-click="{{i.book}}">Book Slot</button></div></div></sc-for></div>
+</sc-if>
+
+<sc-if value="{{t_matcher}}" hint-placeholder-val="{{ false }}">
+<div class="card"><label for="pj">Describe your project</label><textarea id="pj" class="in" rows="4" maxlength="1000" sc-camel-on-input="{{setText}}">{{text}}</textarea>
+<p class="mono" style="margin:4px 0">{{count}} / 1000</p>
+<label for="win">Desired window (IST)</label><input id="win" class="in" type="datetime-local" style="max-width:260px">
+<button class="btn" style="margin-top:12px" sc-camel-on-click="{{match}}">Find Matching Equipment</button></div>
+<sc-if value="{{matched}}" hint-placeholder-val="{{ false }}"><div style="display:grid;gap:12px;margin-top:16px">
+<div class="card"><h3>Need: on-device vision inference</h3><p><span class="mono">JET-01</span> NVIDIA Jetson Nano <span class="badge">Free</span> <span class="badge">Compatible: ARM-01</span></p></div>
+<div class="card"><h3>Need: model training</h3><p><span class="mono">GPU-02</span> RTX 4090 AI Workstation <span class="badge">Busy — Next free: <span class="mono">14:00–16:00 IST</span></span></p></div>
+<div class="card" style="border-color:var(--acc);border-width:2px"><h3>Unmet Needs</h3><p style="margin:4px 0 0">No LiDAR sensor in inventory for the stated mapping requirement.</p></div>
+<div><button class="btn" sc-camel-on-click="{{bookMatched}}">Book Selected Items Together</button></div></div></sc-if>
+</sc-if>
+
+<sc-if value="{{t_bookings}}" hint-placeholder-val="{{ false }}"><div style="overflow-x:auto"><sc-raw-table><sc-raw-caption style="text-align:left;font-weight:700;padding-bottom:8px">Your bookings and requests</sc-raw-caption>
+<sc-raw-thead><sc-raw-tr><sc-raw-th scope="col">Project</sc-raw-th><sc-raw-th scope="col">Items</sc-raw-th><sc-raw-th scope="col">Slot</sc-raw-th><sc-raw-th scope="col">Status</sc-raw-th><sc-raw-th scope="col">Actions</sc-raw-th></sc-raw-tr></sc-raw-thead><sc-raw-tbody>
+<sc-for list="{{bookings}}" as="b" hint-placeholder-count="3"><sc-raw-tr><sc-raw-th scope="row">{{b.title}}</sc-raw-th><sc-raw-td class="mono">{{b.items}}</sc-raw-td><sc-raw-td class="mono">{{b.slot}}</sc-raw-td><sc-raw-td><span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="{{b.ic}}"></path></svg>{{b.status}}</span></sc-raw-td>
+<sc-raw-td><sc-if value="{{b.canCancel}}" hint-placeholder-val="{{ true }}"><button class="btn o" sc-camel-on-click="{{b.cancel}}">Cancel</button></sc-if>
+<sc-if value="{{b.isAlt}}" hint-placeholder-val="{{ false }}"><button class="btn" sc-camel-on-click="{{b.accept}}">Accept Alternative</button> <button class="btn o" sc-camel-on-click="{{b.decline}}">Decline</button></sc-if>
+<sc-if value="{{b.isInfo}}" hint-placeholder-val="{{ false }}"><button class="btn" sc-camel-on-click="{{b.reply}}">Reply</button></sc-if></sc-raw-td></sc-raw-tr></sc-for></sc-raw-tbody></sc-raw-table></div></sc-if>
+
+<sc-if value="{{t_queue}}" hint-placeholder-val="{{ false }}"><div class="card" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px"><div style="flex:1 1 200px"><label for="fn">Faculty name</label><input id="fn" class="in" value="{{fname}}" sc-camel-on-input="{{setFname}}"></div><div style="flex:0 1 160px"><label for="lb">Lab ID</label><input id="lb" class="in mono" value="{{labid}}" sc-camel-on-input="{{setLabid}}"></div></div><div style="display:grid;gap:12px">
+<sc-for list="{{reqs}}" as="r" hint-placeholder-count="3"><div class="card"><h3>{{r.title}}</h3><p class="mono" style="margin:6px 0">{{r.items}} · {{r.slot}} · deadline {{r.deadline}}</p><p><span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="{{r.ic}}"></path></svg>{{r.status}}</span> <span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Safety declared</span></p>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" sc-camel-on-click="{{r.approve}}">Approve</button><button class="btn o" sc-camel-on-click="{{r.reject}}">Reject</button><button class="btn o" sc-camel-on-click="{{r.info}}">Request Information</button><button class="btn o" sc-camel-on-click="{{r.alt}}">Suggest Alternative</button></div>
+<sc-if value="{{r.rejecting}}" hint-placeholder-val="{{ false }}"><label for="rs">Rejection reason (required)</label><input id="rs" class="in" sc-camel-on-input="{{setReason}}"><button class="btn" style="margin-top:8px" sc-camel-on-click="{{r.confirmReject}}">Confirm Reject</button></sc-if></div></sc-for></div></sc-if>
+
+<sc-if value="{{t_conflict}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px"><div style="flex:1 1 200px"><label for="fn">Faculty name</label><input id="fn" class="in" value="{{fname}}" sc-camel-on-input="{{setFname}}"></div><div style="flex:0 1 160px"><label for="lb">Lab ID</label><input id="lb" class="in mono" value="{{labid}}" sc-camel-on-input="{{setLabid}}"></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:12px"><div class="card" style="flex:1 1 300px"><h3>Student A — Computer Vision</h3><p class="mono">JET-01 · 10:00–12:00 IST<br>Deadline: 25 Nov</p></div><div class="card" style="flex:1 1 300px"><h3>Student B — Autonomous Rover</h3><p class="mono">JET-01 · 10:00–12:00 IST<br>Deadline: 24 Nov</p></div></div>
+<div class="card" style="margin-top:12px"><h3>Analyze &amp; Resolve</h3>
+<ol style="line-height:1.7"><li>Rule 1: Hard deadline constraint met for both.</li><li>Rule 2: Fewest students moved: 1.</li><li>Rule 3: Smallest shift: <span class="mono">120 min</span>.</li><li>Rule 4: Earlier deadline (24 Nov) keeps <span class="mono">10:00–12:00 IST</span>; 25 Nov moves to <span class="mono">12:00–14:00 IST</span>.</li></ol>
+<p><strong>AI fairness explanation:</strong> Student B's rover demo is due a day earlier, so B keeps the original slot. Student A loses two hours but still finishes before the deadline.</p>
+<p><span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="{{cic}}"></path></svg>Status: {{conflict}}</span></p>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" sc-camel-on-click="{{cAccept}}">Accept Recommendation</button><button class="btn o" sc-camel-on-click="{{cModify}}">Modify Slot</button><button class="btn o" sc-camel-on-click="{{cReject}}">Reject</button><button class="btn o" sc-camel-on-click="{{cOverride}}">Manual Override</button></div></div></sc-if>
+
+<sc-if value="{{t_users}}" hint-placeholder-val="{{ false }}"><div style="overflow-x:auto"><sc-raw-table><sc-raw-caption style="text-align:left;font-weight:700;padding-bottom:8px">Users and roles</sc-raw-caption><sc-raw-thead><sc-raw-tr><sc-raw-th scope="col">User</sc-raw-th><sc-raw-th scope="col">Role</sc-raw-th><sc-raw-th scope="col">Active</sc-raw-th></sc-raw-tr></sc-raw-thead><sc-raw-tbody>
+<sc-for list="{{users}}" as="u" hint-placeholder-count="4"><sc-raw-tr><sc-raw-th scope="row">{{u.name}}</sc-raw-th><sc-raw-td><button class="btn o" sc-camel-on-click="{{u.cycle}}">{{u.role}}</button></sc-raw-td><sc-raw-td><button class="btn o" sc-camel-on-click="{{u.toggle}}">{{u.activeLabel}}</button></sc-raw-td></sc-raw-tr></sc-for></sc-raw-tbody></sc-raw-table></div></sc-if>
+
+<sc-if value="{{t_audit}}" hint-placeholder-val="{{ false }}"><div style="overflow-x:auto"><sc-raw-table><sc-raw-caption style="text-align:left;font-weight:700;padding-bottom:8px">Append-only audit log (read-only)</sc-raw-caption><sc-raw-thead><sc-raw-tr><sc-raw-th scope="col">Time</sc-raw-th><sc-raw-th scope="col">Actor</sc-raw-th><sc-raw-th scope="col">Action</sc-raw-th><sc-raw-th scope="col">Entity</sc-raw-th><sc-raw-th scope="col">Summary</sc-raw-th></sc-raw-tr></sc-raw-thead><sc-raw-tbody>
+<sc-for list="{{audit}}" as="a" hint-placeholder-count="4"><sc-raw-tr><sc-raw-td class="mono">{{a.ts}}</sc-raw-td><sc-raw-td>{{a.actor}}</sc-raw-td><sc-raw-td>{{a.action}}</sc-raw-td><sc-raw-td class="mono">{{a.entity}}</sc-raw-td><sc-raw-td>{{a.summary}}</sc-raw-td></sc-raw-tr></sc-for></sc-raw-tbody></sc-raw-table></div></sc-if>
+<sc-if value="{{t_ir}}" hint-placeholder-val="{{ false }}"><div class="card" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px"><div style="flex:1 1 200px"><label for="fn">Lab manager name</label><input id="fn" class="in" value="{{fname}}" sc-camel-on-input="{{setFname}}"></div><div style="flex:0 1 160px"><label for="lb">Lab ID</label><input id="lb" class="in mono" value="{{labid}}" sc-camel-on-input="{{setLabid}}"></div></div><div style="display:grid;gap:12px"><sc-for list="{{ir}}" as="r" hint-placeholder-count="2"><div class="card"><h3>{{r.title}}</h3><p class="mono" style="margin:6px 0">{{r.items}} · {{r.slot}} IST</p><p><span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="{{r.ic}}"></path></svg>{{r.status}}</span> <span class="mono">{{r.stamp}}</span></p>
+<sc-if value="{{r.canIssue}}" hint-placeholder-val="{{ true }}"><button class="btn" sc-camel-on-click="{{r.issue}}">Issue Equipment</button></sc-if>
+<sc-if value="{{r.canReturn}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:end"><div><label for="cd{{r.id}}">Condition</label><sc-raw-select id="cd{{r.id}}" class="in" sc-camel-on-change="{{r.setCond}}"><option value="good">good</option><option value="damaged">damaged</option><option value="parts missing">parts missing</option></sc-raw-select></div><div style="flex:1 1 200px"><label for="nt{{r.id}}">Notes</label><input id="nt{{r.id}}" class="in" sc-camel-on-input="{{r.setNote}}"></div><button class="btn" sc-camel-on-click="{{r.ret}}">Return Equipment</button></div></sc-if>
+<sc-if value="{{r.damaged}}" hint-placeholder-val="{{ false }}"><p>Returned damaged. Block this item for repair?</p><button class="btn" sc-camel-on-click="{{r.toMaint}}">Open Maintenance Window</button></sc-if></div></sc-for></div></sc-if>
+<sc-if value="{{t_maint}}" hint-placeholder-val="{{ false }}"><div class="card"><h3>Schedule maintenance</h3><div style="display:flex;flex-wrap:wrap;gap:12px"><div style="flex:1 1 160px"><label for="mc">Equipment</label><sc-raw-select id="mc" class="in" value="{{mcode}}" sc-camel-on-change="{{mCode}}"><sc-for list="{{codes}}" as="c" hint-placeholder-count="3"><option>{{c.c}}</option></sc-for></sc-raw-select></div><div style="flex:1 1 160px"><label for="md">Date</label><sc-raw-select id="md" class="in" value="{{mdate}}" sc-camel-on-change="{{mDate}}"><option>23 Nov</option><option>25 Nov</option><option>26 Nov</option></sc-raw-select></div><div style="flex:1 1 160px"><label for="mt2">Window (IST)</label><sc-raw-select id="mt2" class="in" value="{{mtime}}" sc-camel-on-change="{{mTime}}"><option>10:00–12:00</option><option>12:00–14:00</option><option>14:00–16:00</option></sc-raw-select></div></div><button class="btn" style="margin-top:12px" sc-camel-on-click="{{mCreate}}">Create Maintenance Block</button></div>
+<div style="display:grid;gap:12px;margin-top:12px"><sc-for list="{{maints}}" as="m" hint-placeholder-count="1"><div class="card"><span class="mono">{{m.code}} · {{m.when}}</span><p style="margin:6px 0 0">{{m.result}}</p></div></sc-for></div></sc-if>
+<sc-if value="{{t_dan}}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px"><sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div class="card"><p style="margin:0;font-size:13px">{{k.label}}</p><p class="mono" style="margin:6px 0 0;font-size:28px;font-weight:700">{{k.value}}</p></div></sc-for></div>
+<div class="card" style="margin-top:12px"><h3>Utilization by item (recorded hours of 40)</h3><sc-for list="{{bars}}" as="b" hint-placeholder-count="4"><div style="display:flex;gap:10px;align-items:center;margin-top:8px"><span class="mono" style="flex:0 0 72px">{{b.code}}</span><div style="flex:1;background:var(--surf);height:14px;border-radius:2px"><div style="height:14px;border-radius:2px;background:var(--acc);width:{{b.w}}"></div></div><span class="mono" style="flex:0 0 44px">{{b.pct}}</span></div></sc-for></div></sc-if>
+<sc-if value="{{t_sa}}" hint-placeholder-val="{{ false }}"><div class="card"><h3>Utilization by department</h3><sc-for list="{{dbars}}" as="b" hint-placeholder-count="5"><div style="display:flex;gap:10px;align-items:center;margin-top:8px"><span style="flex:0 0 96px">{{b.code}}</span><div style="flex:1;background:var(--surf);height:14px;border-radius:2px"><div style="height:14px;border-radius:2px;background:var(--acc);width:{{b.w}}"></div></div><span class="mono" style="flex:0 0 44px">{{b.pct}}</span></div></sc-for></div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:12px"><div class="card" style="flex:1 1 280px"><h3>Most-booked items</h3><sc-for list="{{top}}" as="t" hint-placeholder-count="3"><p style="margin:8px 0"><span class="mono">{{t.code}}</span> {{t.name}} <span class="mono">{{t.pct}}</span></p></sc-for></div><div class="card" style="flex:1 1 280px"><h3>Underutilized equipment alerts</h3><sc-for list="{{under}}" as="u" hint-placeholder-count="2"><p style="margin:8px 0"><span class="badge"><svg aria-hidden="true" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>Low use</span> <span class="mono">{{u.code}}</span> {{u.name}} <span class="mono">{{u.pct}}</span></p></sc-for></div></div></sc-if>
+<sc-if value="{{t_rules}}" hint-placeholder-val="{{ false }}"><div style="overflow-x:auto"><sc-raw-table><sc-raw-caption style="text-align:left;font-weight:700;padding-bottom:8px">Global booking rules</sc-raw-caption><sc-raw-thead><sc-raw-tr><sc-raw-th scope="col">Rule</sc-raw-th><sc-raw-th scope="col">Value</sc-raw-th><sc-raw-th scope="col">Action</sc-raw-th></sc-raw-tr></sc-raw-thead><sc-raw-tbody><sc-for list="{{rules}}" as="r" hint-placeholder-count="3"><sc-raw-tr><sc-raw-th scope="row">{{r.label}}</sc-raw-th><sc-raw-td class="mono">{{r.value}}</sc-raw-td><sc-raw-td><button class="btn o" sc-camel-on-click="{{r.tg}}">Change</button></sc-raw-td></sc-raw-tr></sc-for></sc-raw-tbody></sc-raw-table></div>
+<div style="overflow-x:auto;margin-top:16px"><sc-raw-table><sc-raw-caption style="text-align:left;font-weight:700;padding-bottom:8px">Labs</sc-raw-caption><sc-raw-thead><sc-raw-tr><sc-raw-th scope="col">Lab</sc-raw-th><sc-raw-th scope="col">Department</sc-raw-th><sc-raw-th scope="col">Lab manager</sc-raw-th></sc-raw-tr></sc-raw-thead><sc-raw-tbody><sc-raw-tr><sc-raw-th scope="row" class="mono">Lab 3.12</sc-raw-th><sc-raw-td>CSE</sc-raw-td><sc-raw-td>Dr. Ritu Nair</sc-raw-td></sc-raw-tr><sc-raw-tr><sc-raw-th scope="row" class="mono">Lab 2.04</sc-raw-th><sc-raw-td>ECE</sc-raw-td><sc-raw-td>Dr. Ritu Nair</sc-raw-td></sc-raw-tr><sc-raw-tr><sc-raw-th scope="row" class="mono">Lab 4.03</sc-raw-th><sc-raw-td>Robotics</sc-raw-td><sc-raw-td>Unassigned</sc-raw-td></sc-raw-tr><sc-raw-tr><sc-raw-th scope="row" class="mono">Lab 1.07</sc-raw-th><sc-raw-td>Mechanical</sc-raw-td><sc-raw-td>Unassigned</sc-raw-td></sc-raw-tr><sc-raw-tr><sc-raw-th scope="row" class="mono">Lab 5.02</sc-raw-th><sc-raw-td>Biotech</sc-raw-td><sc-raw-td>Unassigned</sc-raw-td></sc-raw-tr></sc-raw-tbody></sc-raw-table></div></sc-if>
+</main></div></div>
+</sc-if>
+
+<sc-if value="{{modal}}" hint-placeholder-val="{{ false }}"><div style="position:fixed;inset:0;background:rgba(16,16,16,.55);display:flex;align-items:center;justify-content:center;padding:16px">
+<dialog open="{{ true }}" aria-modal="true" aria-labelledby="mt" class="card" style="position:static;margin:0;background:#FDFCF8;width:560px;max-width:100%;max-height:90vh;overflow:auto;color:#101010">
+<h2 id="mt" style="font-size:24px">Book {{cartCodes}}</h2>
+<div style="display:flex;flex-wrap:wrap;gap:12px"><div style="flex:1 1 200px"><label for="sn">Student name</label><input id="sn" class="in" sc-camel-on-input="{{setSname}}"></div><div style="flex:1 1 140px"><label for="us">USN</label><input id="us" class="in mono" sc-camel-on-input="{{setUsn}}"></div><div style="flex:1 1 140px"><label for="sd">Department</label><sc-raw-select id="sd" class="in" sc-camel-on-change="{{setSdept}}"><option>CSE</option><option>ECE</option><option>Robotics</option><option>Mechanical</option><option>Biotech</option></sc-raw-select></div></div>
+<label for="pt">Project title</label><input id="pt" class="in" sc-camel-on-input="{{setTitle}}">
+<label for="pd">Project description</label><textarea id="pd" class="in" rows="2"></textarea>
+<label for="dl">Project deadline</label><input id="dl" class="in" type="datetime-local">
+<label for="tm">Team members</label><input id="tm" class="in">
+<p style="font-weight:700;margin:12px 0 4px">Time slot</p>
+<div style="display:grid;gap:6px"><sc-for list="{{slots}}" as="s" hint-placeholder-count="3"><button class="{{s.cls}}" style="text-align:left" sc-camel-on-click="{{s.pick}}"><span class="mono">{{s.label}}</span></button></sc-for></div>
+<sc-if value="{{risk}}" hint-placeholder-val="{{ false }}"><p class="card" style="margin-top:8px">Conflict risk. Alternatives: <span class="mono">12:00–14:00 IST</span>, <span class="mono">16:00–18:00 IST</span>, or compatible item <span class="mono">JET-02</span>.</p></sc-if>
+<label><input type="checkbox" sc-camel-on-change="{{setSafety}}"> I accept the safety declaration</label>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn" sc-camel-on-click="{{submit}}">Submit Request</button><button class="btn o" sc-camel-on-click="{{closeModal}}">Cancel</button></div></dialog></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:900}}">
+const TH={login:{rail:'#101010',hl:'#101010',cta:'#101010',ctah:'#101010',acc:'#101010',surf:'#FDFCF8',card:'#F3F0E9',bd:'#E3DBCC',canvas:'#FDFCF8',ink:'#101010'},
+student:{rail:'#69200F',hl:'#A33215',cta:'#C54716',ctah:'#A33215',acc:'#E75C16',surf:'#FDFCF8',card:'#F3F0E9',bd:'#E3DBCC',canvas:'#FDFCF8',ink:'#101010'},
+faculty:{rail:'#38452A',hl:'#5F6F3A',cta:'#5F6F3A',ctah:'#38452A',acc:'#7E8B52',surf:'#FDFCF8',card:'#F3F0E9',bd:'#E3DBCC',canvas:'#FDFCF8',ink:'#101010'},
+admin:{rail:'#232B3E',hl:'#3A4660',cta:'#3A4660',ctah:'#232B3E',acc:'#566688',surf:'#FDFCF8',card:'#F3F0E9',bd:'#E3DBCC',canvas:'#FDFCF8',ink:'#101010'}};
+const NAV={student:[['catalog','Equipment Catalog'],['matcher','AI Lab Matcher'],['bookings','My Bookings & Requests']],faculty:[['queue','Approval Queue'],['conflict','AI Conflict Resolver'],['ir','Issue & Return (Lab Manager)'],['maint','Maintenance Windows'],['dan','Department Analytics']],admin:[['sa','System Analytics'],['users','Users & Roles'],['audit','Append-Only Audit Log'],['rules','Labs & Global Rules']]};
+const IT=[['JET-01','NVIDIA Jetson Nano Dev Kit','CSE','Lab 3.12','4GB, 128 CUDA cores','ESD wrist strap'],['OSC-04','Keysight Digital Oscilloscope','ECE','Lab 2.04','200 MHz, 4 channel','Probe ground check'],['3DP-02','Bambu Lab X1C 3D Printer','Mechanical','Lab 1.07','256x256x256 mm','Hot nozzle; ventilate'],['FPGA-03','Xilinx Artix-7 FPGA Board','ECE','Lab 2.11','Vivado compatible','ESD strap'],['PCR-01','Bio-Rad PCR Thermal Cycler','Biotech','Lab 5.02','96-well block','Gloves required'],['GPU-02','RTX 4090 AI Workstation','CSE','Lab 3.01','24GB VRAM','None'],['ARM-01','6-DOF Robotic Arm','Robotics','Lab 4.03','Payload 1 kg','Keep clear of workspace'],['STM-05','STM32 Nucleo Kit','ECE','Lab 2.09','Cortex-M4','ESD strap'],['DRN-01','Quadcopter Drone Kit','Robotics','Lab 4.06','Flight controller, 5-inch frame','Propeller guards on'],['SPEC-02','UV-Vis Spectrophotometer','Biotech','Lab 5.04','190-1100 nm','Cuvette handling'],['CNC-01','Desktop CNC Router','Mechanical','Lab 1.02','300x180 mm bed','Eye protection'],['RPI-06','Raspberry Pi 5 Cluster','CSE','Lab 3.08','4 nodes, 8GB each','None']];
+const ICON={d:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',available:'M20 6 9 17l-5-5',confirmed:'M20 6 9 17l-5-5',accepted:'M20 6 9 17l-5-5',completed:'M18 7l-8 8-4-4M22 7l-8 8',submitted:'M22 2 11 13M22 2l-7 20-4-9-9-4z',pending_approval:'M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',awaiting_information:'M12 16v-4M12 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',alternative_suggested:'M17 3l4 4-4 4M3 7h18M7 21l-4-4 4-4M21 17H3',active:'M6 4l14 8-14 8z',cancelled:'M18 6 6 18M6 6l12 12',rejected:'M18 6 6 18M6 6l12 12',conflict_detected:'M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z',maintenance:'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',maintenance_blocked:'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',open:'M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0'};
+const DEPT={CSE:78,ECE:61,Robotics:55,Mechanical:47,Biotech:29};
+const SLOTS=[['10:00 – 12:00 IST (Available)',0],['12:00 – 14:00 IST (Available)',0],['14:00 – 16:00 IST (Conflict Risk)',1]];
+const CY=['unassigned','student','faculty','admin'];
+class Component extends DCLogic{
+constructor(p){super(p);this.state={screen:'login',tab:'catalog',q:'',dept:'All',stat:'All',cart:[],modal:false,slot:'',safety:false,ptitle:'',text:'',matched:false,conflict:'open',rej:null,reason:'',fname:'',labid:'',sname:'',usn:'',sdept:'CSE',notesOpen:false,notes:[{text:'Conflict on JET-01 needs a decision.',read:false},{text:'New request awaiting approval: FPGA Filter Design.',read:false},{text:'PCR-01 calibration due this week.',read:true}],mcode:'JET-01',mdate:'23 Nov',mtime:'10:00–12:00',maints:[],hrs:{'JET-01':22,'OSC-04':14,'3DP-02':30,'FPGA-03':9,'PCR-01':26,'GPU-02':34,'ARM-01':18,'STM-05':6,'DRN-01':12,'SPEC-02':5,'CNC-01':21,'RPI-06':8},rules:{maxH:4,safety:true,auto:false},ir:[{id:1,title:'Vision Pipeline',items:'JET-01',slot:'23 Nov 10:00–12:00',status:'confirmed',cond:'good',note:'',issuedAt:'',returnedAt:''},{id:2,title:'Signal Lab Session',items:'OSC-04',slot:'23 Nov 12:00–14:00',status:'confirmed',cond:'good',note:'',issuedAt:'',returnedAt:''}],
+bookings:[{id:1,title:'Vision Pipeline',items:'JET-01',slot:'25 Nov 10:00–12:00',status:'confirmed'},{id:2,title:'Rover Chassis',items:'ARM-01, STM-05',slot:'26 Nov 14:00–16:00',status:'alternative_suggested'},{id:3,title:'PCR Optimisation',items:'PCR-01',slot:'27 Nov 10:00–12:00',status:'awaiting_information'}],
+reqs:[{id:1,title:'Computer Vision (Student A)',items:'JET-01',slot:'25 Nov 10:00–12:00 IST',deadline:'25 Nov',status:'pending_approval'},{id:2,title:'FPGA Filter Design',items:'FPGA-03, OSC-04',slot:'26 Nov 12:00–14:00 IST',deadline:'30 Nov',status:'pending_approval'}],
+users:[{name:'Aarav Mehta',role:'student',on:true},{name:'Dr. Ritu Nair',role:'faculty',on:true},{name:'S. Iyer',role:'unassigned',on:true},{name:'Admin Office',role:'admin',on:true}],
+audit:[{ts:'23 Nov 2026 09:02 IST',actor:'System',role:'system',action:'conflict_detected',entity:'JET-01',summary:'Overlap 10:00–12:00 between two requests'}]};}
+log(actor,action,entity,summary){this.setState(s=>({audit:[{ts:'23 Nov 2026 11:00 IST',actor:(actor==='Dr. Ritu Nair'||actor==='Lab Manager')&&s.fname?s.fname+(s.labid?' ('+s.labid+')':''):actor,action,entity,summary},...s.audit]}));}
+go(screen){const t=NAV[screen][0][0];this.setState({screen,tab:t,modal:false});}
+upd(k,id,f){this.setState(s=>({[k]:s[k].map(x=>x.id===id?Object.assign({},x,f):x)}));}
+renderVals(){const s=this.state,S=this;const sc=s.screen;const th=TH[sc];
+const vars=Object.keys(th).map(k=>'--'+k+':'+th[k]).join(';');
+const nav=(NAV[sc]||[]).map(n=>({label:n[1],cls:'nav'+(s.tab===n[0]?' on':''),go:()=>S.setState({tab:n[0]})}));
+const cur=(NAV[sc]||[]).find(n=>n[0]===s.tab);
+const items=IT.map((r,i)=>({code:r[0],name:r[1],dept:r[2],loc:r[3],spec:r[4],safety:r[5],status:i===2?'maintenance':'available',ic:ICON[i===2?'maintenance':'available']})).filter(i=>(s.dept==='All'||i.dept===s.dept)&&(s.stat==='All'||i.status===s.stat)&&(i.name+i.code).toLowerCase().includes(s.q.toLowerCase())).map(i=>{const inC=s.cart.includes(i.code);return Object.assign({},i,{addLabel:inC?'Remove':'Add to Booking',add:()=>S.setState({cart:inC?s.cart.filter(c=>c!==i.code):[...s.cart,i.code]}),book:()=>S.setState({cart:inC?s.cart:[...s.cart,i.code],modal:true})});});
+const bookings=s.bookings.map(b=>({title:b.title,items:b.items,slot:b.slot,status:b.status,ic:ICON[b.status]||ICON.d,canCancel:b.status!=='cancelled'&&b.status!=='completed',isAlt:b.status==='alternative_suggested',isInfo:b.status==='awaiting_information',
+cancel:()=>S.upd('bookings',b.id,{status:'cancelled'}),accept:()=>S.upd('bookings',b.id,{status:'confirmed'}),decline:()=>S.upd('bookings',b.id,{status:'submitted'}),reply:()=>S.upd('bookings',b.id,{status:'pending_approval'})}));
+const reqs=s.reqs.map(r=>({title:r.title,items:r.items,slot:r.slot,deadline:r.deadline,status:r.status,ic:ICON[r.status]||ICON.d,rejecting:s.rej===r.id,
+approve:()=>{S.upd('reqs',r.id,{status:'confirmed'});S.log('Dr. Ritu Nair','approved',r.items,r.title)},reject:()=>S.setState({rej:r.id}),
+confirmReject:()=>{if(!s.reason)return;S.upd('reqs',r.id,{status:'rejected'});S.setState({rej:null});S.log('Dr. Ritu Nair','rejected',r.items,s.reason)},
+info:()=>S.upd('reqs',r.id,{status:'awaiting_information'}),alt:()=>S.upd('reqs',r.id,{status:'alternative_suggested'})}));
+const users=s.users.map((u,i)=>({name:u.name,role:u.role,activeLabel:u.on?'Active':'Disabled',cycle:()=>{const r=CY[(CY.indexOf(u.role)+1)%4];S.setState({users:s.users.map((x,j)=>j===i?Object.assign({},x,{role:r}):x)});S.log('Admin','role_assigned',u.name,'Role set to '+r)},toggle:()=>S.setState({users:s.users.map((x,j)=>j===i?Object.assign({},x,{on:!x.on}):x)})}));
+const slots=SLOTS.map(x=>({label:x[0],cls:'btn'+(s.slot===x[0]?'':' o'),pick:()=>S.setState({slot:x[0]})}));
+const resolve=(st,a,m)=>()=>{S.setState({conflict:st});S.log('Dr. Ritu Nair',a,'JET-01',m)};
+const hit=x=>x.status==='confirmed'&&x.items.includes(s.mcode)&&x.slot.includes(s.mdate+' '+s.mtime);
+const mark=l=>l.map(x=>hit(x)?Object.assign({},x,{status:'maintenance_blocked'}):x);
+const mCreate=()=>{const bl=[...s.ir,...s.reqs,...s.bookings].filter(hit);const when=s.mdate+' '+s.mtime+' IST';S.setState({ir:mark(s.ir),reqs:mark(s.reqs),bookings:mark(s.bookings),maints:[{code:s.mcode,when,result:bl.length?'Flagged maintenance_blocked: '+bl.map(x=>x.title).join(', '):'No overlapping confirmed bookings.'},...s.maints]});S.log('Dr. Ritu Nair','maintenance_created',s.mcode,when+', '+bl.length+' booking(s) flagged')};
+const irs=s.ir.map(r=>({id:r.id,title:r.title,items:r.items,slot:r.slot,status:r.status,ic:ICON[r.status]||ICON.d,stamp:r.returnedAt?'returned '+r.returnedAt:(r.issuedAt?'issued '+r.issuedAt:''),canIssue:r.status==='confirmed',canReturn:r.status==='active',damaged:r.status==='completed'&&r.cond==='damaged',issue:()=>{S.upd('ir',r.id,{status:'active',issuedAt:'23 Nov 11:00 IST'});S.log('Lab Manager','issued',r.items,r.title)},setCond:e=>S.upd('ir',r.id,{cond:e.target.value}),setNote:e=>S.upd('ir',r.id,{note:e.target.value}),ret:()=>{S.upd('ir',r.id,{status:'completed',returnedAt:'23 Nov 13:00 IST'});const c=r.items.split(',')[0].trim();S.setState(st=>({hrs:Object.assign({},st.hrs,{[c]:(st.hrs[c]||0)+2})}));S.log('Lab Manager','returned',r.items,'Condition: '+r.cond+(r.note?' - '+r.note:''))},toMaint:()=>S.setState({tab:'maint',mcode:r.items.split(',')[0].trim()})}));
+const tot=Object.values(s.hrs).reduce((a,b)=>a+b,0);const apr=s.audit.filter(a=>a.action==='approved').length,rjc=s.audit.filter(a=>a.action==='rejected').length;
+const kpis=[{label:'Active Bookings',value:String(s.ir.filter(x=>x.status==='active').length)},{label:'Recorded Utilization',value:Math.round(tot/480*100)+'%'},{label:'Conflicts Resolved',value:s.conflict==='open'?'0':'1'},{label:'Approval Rate',value:apr+rjc?Math.round(apr/(apr+rjc)*100)+'%':'n/a'}];
+const bars=IT.map(r=>({code:r[0],pct:Math.round(s.hrs[r[0]]/40*100)+'%',w:Math.min(100,s.hrs[r[0]]/40*100)+'%'}));
+const dbars=Object.keys(DEPT).map(k=>({code:k,pct:DEPT[k]+'%',w:DEPT[k]+'%'}));
+const srt=IT.map(r=>[r[0],r[1],s.hrs[r[0]]]).sort((a,b)=>b[2]-a[2]);
+const top=srt.slice(0,3).map(r=>({code:r[0],name:r[1],pct:r[2]+' h'}));const under=srt.filter(r=>r[2]<10).map(r=>({code:r[0],name:r[1],pct:Math.round(r[2]/40*100)+'%'}));
+const rl=s.rules;const rset=(k,v)=>{S.setState({rules:Object.assign({},rl,{[k]:v})});S.log('Admin','rule_changed',k,String(v))};
+const rules=[{label:'Maximum booking duration',value:rl.maxH+' hours',tg:()=>rset('maxH',rl.maxH===4?6:rl.maxH===6?2:4)},{label:'Safety declaration required',value:rl.safety?'On':'Off',tg:()=>rset('safety',!rl.safety)},{label:'Auto-approve bookings under 2 hours',value:rl.auto?'On':'Off',tg:()=>rset('auto',!rl.auto)}];
+return{t_ir:sc==='faculty'&&s.tab==='ir',t_maint:sc==='faculty'&&s.tab==='maint',t_dan:sc==='faculty'&&s.tab==='dan',t_sa:sc==='admin'&&s.tab==='sa',t_rules:sc==='admin'&&s.tab==='rules',ir:irs,maints:s.maints,mcode:s.mcode,mdate:s.mdate,mtime:s.mtime,mCode:e=>S.setState({mcode:e.target.value}),mDate:e=>S.setState({mdate:e.target.value}),mTime:e=>S.setState({mtime:e.target.value}),mCreate,codes:IT.map(r=>({c:r[0]})),kpis,bars,dbars,top,under,rules,notesOpen:s.notesOpen,notes:s.notes.map(n=>({text:n.text,w:n.read?400:700})),unread:s.notes.filter(n=>!n.read).length,toggleNotes:()=>S.setState({notesOpen:!s.notesOpen}),readAll:()=>S.setState({notes:s.notes.map(n=>Object.assign({},n,{read:true}))}),cic:ICON[s.conflict==='open'?'conflict_detected':'confirmed'],
+fname:s.fname,labid:s.labid,setFname:e=>S.setState({fname:e.target.value}),setLabid:e=>S.setState({labid:e.target.value}),setSname:e=>S.setState({sname:e.target.value}),setUsn:e=>S.setState({usn:e.target.value}),setSdept:e=>S.setState({sdept:e.target.value}),goHome:()=>S.setState({screen:'login',modal:false}),
+vars,isLogin:sc==='login',inApp:sc!=='login',nav,title:cur?cur[1]:'',roleName:sc.toUpperCase(),
+t_catalog:sc==='student'&&s.tab==='catalog',t_matcher:sc==='student'&&s.tab==='matcher',t_bookings:sc==='student'&&s.tab==='bookings',t_queue:sc==='faculty'&&s.tab==='queue',t_conflict:sc==='faculty'&&s.tab==='conflict',t_audit:sc==='admin'&&s.tab==='audit',t_users:sc==='admin'&&s.tab==='users',
+goStudent:()=>S.go('student'),goFaculty:()=>S.go('faculty'),goAdmin:()=>S.go('admin'),signOut:()=>S.setState({screen:'login'}),
+q:s.q,setQ:e=>S.setState({q:e.target.value}),setDept:e=>S.setState({dept:e.target.value}),setStat:e=>S.setState({stat:e.target.value}),items,
+text:s.text,count:s.text.length,setText:e=>S.setState({text:e.target.value.slice(0,1000)}),matched:s.matched,match:()=>S.setState({matched:true}),bookMatched:()=>S.setState({cart:['JET-01','GPU-02'],modal:true}),
+bookings,reqs,setReason:e=>S.setState({reason:e.target.value}),users,audit:s.audit,
+conflict:s.conflict,cAccept:resolve('accepted','accepted AI recommendation','Accepted: B keeps 10:00–12:00, A moves to 12:00–14:00'),cModify:resolve('modified','modified slot','Faculty modified the recommended slot'),cReject:resolve('rejected','rejected AI recommendation','Recommendation rejected'),cOverride:resolve('overridden','manual override','Faculty overrode AI recommendation'),
+modal:s.modal,cartCodes:s.cart.join(', ')||'equipment',slots,risk:s.slot.includes('Risk'),setTitle:e=>S.setState({ptitle:e.target.value}),setSafety:e=>S.setState({safety:e.target.checked}),closeModal:()=>S.setState({modal:false}),
+submit:()=>{if(!s.safety||!s.slot||!s.sname||!s.usn)return;S.log(s.sname+' ('+s.usn+')','booking_submitted',s.cart.join(', '),s.ptitle||'New project');S.setState({bookings:[...s.bookings,{id:Date.now(),title:s.ptitle||'New project',items:s.cart.join(', '),slot:s.slot.split(' (')[0],status:'pending_approval'}],modal:false,cart:[],slot:'',tab:'bookings'})}};}}
+</script>
+
+
+</body></html>
